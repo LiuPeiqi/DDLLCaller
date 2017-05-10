@@ -1,6 +1,8 @@
 #ifndef LPQ_LIB_D_DLL_CALLER_h
 #define LPQ_LIB_D_DLL_CALLER_h
-
+/*
+* Connot load const variable symbol, because maybe value equal 0 and raise a exception.
+*/
 #ifdef _WIN32
 #	define DLL "dll"
 #include <Windows.h>
@@ -45,6 +47,12 @@ inline const DDLLCaller_MODULE Model##_singleton(){\
 
 #define GetModel(Model) Model##_singleton()
 
+#ifdef _WIN32
+#	ifdef _WIN64 //x64 have only fastcall and no name decoration
+#define ONLY_ORIGINAL_NAME(func) STR(func)
+#define CDECL_CONVENTION(func)  STR(func)
+#define STDCALL_CONVENTION(func) STR(func)
+#	else // x86
 #include "FuncArgsSize.h"
 namespace lpq {
 	inline const char* _StdCallConvention(const char *func, unsigned int size)
@@ -59,6 +67,12 @@ namespace lpq {
 #define ONLY_ORIGINAL_NAME(func) STR(func)
 #define CDECL_CONVENTION(func) "_" STR(func)
 #define STDCALL_CONVENTION(func) lpq::_StdCallConvention(STR(func), GET_FUNC_ARGS_SIZE(func))
+#	endif
+#else // linux have no name decoration
+#define ONLY_ORIGINAL_NAME(func) STR(func)
+#define CDECL_CONVENTION(func)  STR(func)
+#define STDCALL_CONVENTION(func) STR(func)
+#endif 
 
 #define LoadFunction(Model, Function, CALL_CONVENTION)\
 inline const decltype(&Function)& Model##Function##_singleton(\
@@ -88,7 +102,7 @@ inline const decltype(&Function)& Model##Function##_singleton(\
 #define LoadCdeclFunction(Model, Function) LoadFunction(Model, Function, CDECL_CONVENTION)
 #define LoadStdcallFunction(Model, Function) LoadFunction(Model, Function, STDCALL_CONVENTION)
 
-#define GetFunction(Model,Function) Model##Function##_singleton(__FILE__, __LINE__)
-#define GetFunction_FL_(Model,Function, filename, lineno) Model##Function##_singleton(filename, lineno)
+#define GetFunction(Model, Function) Model##Function##_singleton(__FILE__, __LINE__)
+#define GetFunction_FL_(Model, Function, filename, lineno) Model##Function##_singleton(filename, lineno)
 
 #endif 

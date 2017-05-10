@@ -28,3 +28,15 @@
 *.out
 *.app
 /DDLLCaller/DDLLCaller.VC.db
+/DDLLCaller_VS/Debug
+/DDLLCaller_VS/LoadAPI/Debug
+/DDLLCaller_VS/LoadAPI/Release
+/DDLLCaller_VS/LoadAPI/x64/Release
+/DDLLCaller_VS/LoadAPI/x64/Debug
+/DDLLCaller_VS/TestDllAPI/x64/Release
+/DDLLCaller_VS/TestDllAPI/x64/Debug
+/DDLLCaller_VS/x64/Debug
+/DDLLCaller_VS/x64/Release
+/DDLLCaller_VS/TestDllAPI/Debug
+/DDLLCaller_VS/TestDllAPI/Release
+/DDLLCaller_VS/Release
