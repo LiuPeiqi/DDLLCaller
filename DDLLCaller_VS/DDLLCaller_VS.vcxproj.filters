@@ -21,5 +21,8 @@
     <ClInclude Include="..\include\DDLLCaller\FuncArgsSize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\DDLLCaller\FunctionInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
